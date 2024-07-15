@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import Modal from "@/components/Modal";
 import axios from "axios";
 import UpdateModal from "@/components/UpdateModal";
+import Footer from "@/components/Footer";
 
 const Home = () => {
   let auth = "";
@@ -90,6 +91,7 @@ const Home = () => {
             </div>
           )}
         </div>
+        <Footer />
       </div>
     )
   );

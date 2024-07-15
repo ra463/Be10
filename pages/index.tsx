@@ -54,45 +54,47 @@ const Home = () => {
 
   return (
     auth && (
-      <div className="relative">
-        <Header setOpen={setOpen} auth={auth} />
-        {open && <Modal setOpen={setOpen} getData={getData} />}
-        <div className="mt-5 flex flex-col px-5 gap-3 items-center">
-          {messages && messages.length > 0 ? (
-            messages.map((message: any, index: number) => (
-              <div
-                key={index}
-                className="p-3 px-4 bg-slate-100 rounded-md shadow w-full flex items-center justify-between"
-              >
-                <span>{message?.message}</span>
-                <div className="flex gap-2">
-                  <button
-                    onClick={(e) => handleDelete(e, message?._id)}
-                    className="p-3"
-                  >
-                    Delete
-                  </button>
-                  <button onClick={() => setOpenModal(true)} className="p-3">
-                    Update
-                  </button>
+      <>
+        <div className="relative">
+          <Header setOpen={setOpen} auth={auth} />
+          {open && <Modal setOpen={setOpen} getData={getData} />}
+          <div className="mt-5 flex flex-col px-5 gap-3 items-center">
+            {messages && messages.length > 0 ? (
+              messages.map((message: any, index: number) => (
+                <div
+                  key={index}
+                  className="p-3 px-4 bg-slate-100 rounded-md shadow w-full flex items-center justify-between"
+                >
+                  <span>{message?.message}</span>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={(e) => handleDelete(e, message?._id)}
+                      className="p-3"
+                    >
+                      Delete
+                    </button>
+                    <button onClick={() => setOpenModal(true)} className="p-3">
+                      Update
+                    </button>
+                  </div>
+                  {openModal && (
+                    <UpdateModal
+                      setOpen={setOpenModal}
+                      data={message}
+                      getData={getData}
+                    />
+                  )}
                 </div>
-                {openModal && (
-                  <UpdateModal
-                    setOpen={setOpenModal}
-                    data={message}
-                    getData={getData}
-                  />
-                )}
+              ))
+            ) : (
+              <div className="bg-white p-3 rounded-md shadow-md w-full">
+                No Messages
               </div>
-            ))
-          ) : (
-            <div className="bg-white p-3 rounded-md shadow-md w-full">
-              No Messages
-            </div>
-          )}
+            )}
+          </div>
         </div>
         <Footer />
-      </div>
+      </>
     )
   );
 };

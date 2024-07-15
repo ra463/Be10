@@ -22,16 +22,22 @@ const Login = () => {
     e.preventDefault();
 
     setLoading(true);
-    const { data } = await axios.post("/api/user/login", {
-      email,
-      password,
-    });
+    try {
+      const { data } = await axios.post("/api/user/login", {
+        email,
+        password,
+      });
 
-    if (data.success === true) {
-      Cookies.set("token", data.token);
+      if (data.success === true) {
+        Cookies.set("token", data.token);
+        setLoading(false);
+        alert(data.message);
+        router.push("/");
+      }
+    } catch (error: any) {
       setLoading(false);
-      alert(data.message);
-      router.push("/");
+      console.log(error);
+      alert(error.response.data.message);
     }
   };
 
@@ -49,15 +55,6 @@ const Login = () => {
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Sign in to your account
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600 max-w">
-            Or{" "}
-            <a
-              href="#"
-              className="font-medium text-blue-600 hover:text-blue-500"
-            >
-              create an account
-            </a>
-          </p>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
